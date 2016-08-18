@@ -1,0 +1,233 @@
+---
+output: 
+  BiocStyle::html_document2:
+    toc: true
+    toc_float: true
+    css: readthedown.css
+---
+
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+
+# My problems with Rmd
+
+So I really would like to use Rmd for documents that mix R with text. But
+it is being awfully hard, compared to using Rnw (which mixes good, old,
+LaTeX).
+
+Why? Because PDFs are inflexible, and HTML resizing on the fly is great
+for many technical documents you read in different devices.
+
+
+## What is this
+
+Some notes. For me, basically.
+
+
+## General issues
+
+1. Rendering to both HTML and PDF is not as easy as you might believe, in
+particular if you want specific things.  Markdown is supposed to be easy,
+but I've spent much more time in three days googling around how to do
+things than I spend using LaTeX over extended periods of time.
+
+
+2. I've found issues with some templates/functions from BioC. In
+particular, pdf_document2 crashes with some constructs, and pdf_document
+will not accept the `\@ref` syntax.
+
+
+
+
+## Tables really suck in markdown
+
+So building tables in LaTeX used to be a piece of cake, with infinite
+configurability. Markdown? Man, it is terribly hard to get what you
+want. And you need to carefully play ascii code. And then renderers will
+do all sorts of things. 
+
+### Notes and examples of tables here
+
+Great resource:
+
+<https://cran.r-project.org/web/packages/pander/vignettes/pandoc_table.html>
+
+
+# A simple table from emacs
+
+but it cannot be aligned
+
++-----+-----+-----+---------------+
+|A    |  E  |I    |       O       |
++=====+=====+=====+===============+
+|1    |  3  |4    |    1237 8     |
+|     |     |     |               |
++-----+-----+-----+---------------+
+|2    |  4  |6    |78989080808098 |
++-----+-----+-----+---------------+
+
+### What matters is placement of first {#ref1}
+
+This is my preferred style.
+
+----------------------------------------
+A           B               C       D
+-------     ------ ----------   -------
+     12     12        12             12
+	 
+    123     123       123           123
+	
+      1     1          1              1
+-------     ------ ----------   -------
+
+
+### This will not expand to full column, and allows col. justification
+
+
+---------------------------------------
+      A     B          C              D
+-------     ------ ----------   -------
+     12     12        12             12
+
+    123     123       123           123
+
+      1     1          1              1
+----------------------------------------
+
+
+
+-------------------------------------------------------------
+ Centered   Default           Right Left
+  Header    Aligned         Aligned Aligned
+----------- ------- --------------- -------------------------
+   First    row                12.0 Example of a row that
+                                    spans multiple lines.
+
+  Second    row                 5.0 Here's another one. Note
+                                    the blank line between
+                                    rows.
+-------------------------------------------------------------
+
+
++-----+-----+-----+-----+
+|    A|    E|I    |O    |
++=====+=====+=====+=====+
+|    1|    3|4    |8  |
++-----+-----+-----+-----+
+|    2|    4|6    |7   |
++-----+-----+-----+-----+
+
+
+
+
+
+
+
+## Another table 
+
+
++----------------+-------+-------+--------+------+
+|                |  mpg  |  cyl  |  disp  |  hp  |
++================+=======+=======+========+======+
+| Mazda RX4      |  21   |   6   |  160   | 110  |
++----------------+-------+-------+--------+------+
+| zda RX4 Wag    |  21   |   6   |  160   | 110  |
++----------------+-------+-------+--------+------+
+| atsun 710      | 22.8  |   4   |  108   |  93  |
++----------------+-------+-------+--------+------+
+
+
+## Do you expect these to be aligned where you think?
+
+
+I cannot understand the formatting. No idea since they look very similar
+to Emacs' ones. 
+
++----------------+---------------+----------------+
+|   Sepal.Length |   Sepal.Width |   Petal.Length |
++================+===============+================+
+|            5.1 |           3.5 |            1.4 |
++----------------+---------------+----------------+
+|            4.9 |             3 |            1.4 |
++----------------+---------------+----------------+
+
+
+
++------------------+-------+-------+--------+------+--------+
+|                  | mpg   | cyl   | disp   | hp   | drat   |
++==================+=======+=======+========+======+========+
+|        Mazda RX4 | 21    | 6     | 160    | 110  | 3.9    |
++------------------+-------+-------+--------+------+--------+
+|    Mazda RX4 Wag | 21    | 6     | 160    | 110  | 3.9    |
++------------------+-------+-------+--------+------+--------+
+
+
+
+
++-----------------+---------------+----------------+
+|   Sepal.Length  |   Sepal.Width |   Petal.Length |
++=================+===============+================+
+|            5.1  |           3.5 |            1.4 |
++-----------------+---------------+----------------+
+|            4.9  |             3 |            1.4 |
++-----------------+---------------+----------------+
+
+
+### This was created with emacs table mode
+
+And it does not do anything strange. I just don't get it.
+
++-----+-----+-----+
+|    a|    e|    i|
++=====+=====+=====+
+|    9|    8|    7|
++-----+-----+-----+
+
+
+
+
+## A table {#ref0}
+
+
+This will often span the whole column. Why, oh why!
+
+
+
+Fruit   | Price
+------- | -----
+bananas | 1.2
+apples  | 1.0
+oranges | 2.5
+
+
+
+
+|Fruit   | Price |
+|------- | ----- |
+|bananas | 1.2	 |
+|apples  | 1.0	 |
+|oranges | 2.5	 |
+
+
+
+
+I want to refer to \@ref(ref1)
+
+```{r}
+knitr::kable(
+  head(mtcars, 10), booktabs = TRUE,
+  caption = 'A table of the first 10 rows of the mtcars data.'
+)
+```
+
+
+## A nested one
+
+Bloblo
+
+I want to refer to \@ref(ref1)
+
+I want to refer to \@ref(ref0)
