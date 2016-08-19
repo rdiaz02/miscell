@@ -36,8 +36,23 @@ things than I spend using LaTeX over extended periods of time.
 
 
 2. I've found issues with some templates/functions from BioC. In
-particular, pdf_document2 crashes with some constructs, and pdf_document
-will not accept the `\@ref` syntax.
+particular, `pdf_document2` crashes with some constructs, and
+`pdf_document` will not accept the `\@ref` syntax.
+
+3. Fonts: R Markdown is very limited on what you can do quickly to change
+   fonts if you use pdflatex. And trying to use xelatex or luatex has got
+   me nowhere.
+
+4. There is nothing like synctex, which is awesome and works great with
+   Emacs and pdf-tools and okular and ...
+5. Referencing equations, etc, is not simple.
+6. Sometimes things fail for mysterious reasons; you have no idea what
+   went wrong, you run it again, and it is fixed, specially when crating PDFs.
+7. Debugging errors, specially in the latex files on their way to PDF is
+   painful. 
+   
+   
+
 
 
 
